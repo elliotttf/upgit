@@ -1,0 +1,5 @@
+# node_modules ignored by default
+
+# Ignore generated files
+coverage
+.nyc_output
