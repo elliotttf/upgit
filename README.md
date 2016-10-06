@@ -1,5 +1,8 @@
 # Up Git
 
+[![Build Status](https://travis-ci.org/elliotttf/upgit.svg?branch=master)](https://travis-ci.org/elliotttf/upgit)
+[![Coverage Status](https://coveralls.io/repos/github/elliotttf/upgit/badge.svg?branch=master)](https://coveralls.io/github/elliotttf/upgit?branch=master)
+
 This module will allow you to target a file or files from one repository
 (the target) and the same file or files in another (the source). A diff
 between files will open a pull request on the source repository.

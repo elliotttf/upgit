@@ -4,6 +4,7 @@
   "description": "Opens pull requests against a target repository from a source file or files.",
   "main": "index.js",
   "scripts": {
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test": "istanbul cover --print both nodeunit ./test/index.js",
     "lint": "eslint ."
   },
@@ -28,6 +29,7 @@
     "nodegit": "^0.16.0"
   },
   "devDependencies": {
+    "coveralls": "^2.11.14",
     "eslint": "^3.6.1",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^1.16.0",
