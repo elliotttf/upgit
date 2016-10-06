@@ -17,20 +17,21 @@ class UpGit {
    *   - repoUrl
    *   - filePath
    *   - baseBranch
-   *   - user
    * @param {object} target
    *   The target repository to merge changes from.
    *   - name
    *   - repoUrl
    *   - filePath
    * @param {object} author
-   *   Author information for signing commits
+   *   Author information for signing commits.
    *   - name
    *   - email
-   * @param {string} token
-   *   The github token to create a pull request with.
+   * @param {object} github
+   *   The github user and token to create a pull request with.
+   *   - user
+   *   - token
    */
-  constructor(source, target, author, token) {
+  constructor(source, target, author, github) {
     this.id = `${Date.now()}-${source.name}`;
 
     this.source = source;
@@ -47,9 +48,8 @@ class UpGit {
       },
     };
 
-    this.gh = new GitHub({
-      token,
-    });
+    this.githubUser = github.user;
+    this.gh = new GitHub({ token: github.token });
   }
 
   /**
@@ -95,7 +95,7 @@ class UpGit {
     const targetClonePath = path.join(tmpDir(), `${this.id}-${this.target.name}`);
     return Promise.all([
       Clone.clone(this.source.repoUrl, sourceClonePath, { fetchOpts: this.defaultOpts }),
-      Clone.clone(this.target.repoUrl, targetClonePath),
+      Clone.clone(this.target.repoUrl, targetClonePath, { fetchOpts: this.defaultOpts }),
     ])
       .then((repositories) => {
         [this.sourceRepo, this.targetRepo] = repositories;
@@ -193,8 +193,8 @@ class UpGit {
    *   Resolves when the pull request is open.
    */
   openPR() {
-    return this.gh.getRepo(this.source.user, this.source.name).createPullRequest({
-      title: `Automatic update of ${this.source.name} from ${this.target.name}.`,
+    return this.gh.getRepo(this.githubUser, this.source.name).createPullRequest({
+      title: `Automatic update of ${this.source.name} from ${this.target.name}`,
       head: this.id,
       base: this.source.baseBranch,
     });

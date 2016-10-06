@@ -15,7 +15,6 @@ const ug = new UpGit(
     repoUrl: SOURCE_REPO_URL,
     filePath: SOURCE_TARGET_FILE_PATH,
     baseBranch: BASE_BRANCH,
-    user: GITHUB_USER,
   },
   // This is info about the repo you're applying changes _from_.
   {
@@ -28,8 +27,11 @@ const ug = new UpGit(
     name: COMMITTER_NAME,
     email: COMMITTER_EMAIL,
   },
-  // This is a github token to use when opening the PR.
-  GITHUB_TOKEN
+  // This is a github info to use when opening the PR.
+  {
+    user: GITHUB_USER,
+    token: GITHUB_TOKEN,
+  }
 );
 
 ug.pullIfNeeded()
